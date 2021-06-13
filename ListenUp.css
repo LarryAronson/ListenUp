@@ -1,0 +1,46 @@
+/** 
+ * Default CSS styles for the "ListenUp" WordPress plugin
+ * copyright (c) 2021, Larry Aronson
+ **/
+ 
+span.ListenUp-content { 			/* enclosed content */
+	line-height: inherit;
+	text-decoration: none; 
+}
+span.ListenUp-excerpt { 			/* class for excerpt */
+	font: bold italic 1.2rem sans-serif; 
+}
+span.ListenUp-custom {		 		/* custom field */
+	font: bold italic 1rem serif; 
+}
+
+span.ListenUp-content, 
+    .ListenUp-inline,
+    .ListenUp-custom,
+    .ListenUp-excerpt,
+    .ListenUp-image { display: inline-block; } 
+
+span.ListenUp-content:hover, 
+    .ListenUp-inline:hover,
+    .ListenUp-custom:hover,
+    .ListenUp-excerpt:hover,
+    .ListenUp-image:hover { cursor: pointer; color: blue; } 
+
+span.ListenUp-button { 				/* class for style = 'button' */
+	display: inline-block;
+	font: bold 12pt sans-serif;
+	text-decoration: none; 
+	margin: 0.5rem 0;
+	padding: 0.5rem 1rem;
+	border: 2px solid #469;
+	border-radius: 0.5rem; 
+	background-color: #e7ffe7;
+}
+span.ListenUp-button:hover { 		/* button hover state */
+	border-style: outset;
+	color: #66f;
+} 
+span.ListenUp-button:active { 		/* button active state */
+	color: #00a;
+	border-style: inset;
+} 
