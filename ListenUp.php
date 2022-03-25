@@ -3,8 +3,8 @@
  * Plugin Name: ListenUp
  * Description: Create shortcodes for speech synthesis
  * Author: Larry Aronson
- * Version: 0.9.6
- * Updated: 2021-03-23
+ * Version: 0.9.7
+ * Updated: 2022-03-14
  * Author URI: https://LarryAronson.com/
  */
 
@@ -64,7 +64,7 @@ function lup_ListenUp ( $atts, $content = null, $tag = '' ) {
 /* clean up the text to be spoken */	
 	$saytext = preg_replace('/[[:cntrl:]]/', ' ', $saytext); // replace control chars with blanks 
 	$saytext = preg_replace('/[“"”]/', '', $saytext); 		 // lose double quotes
-	$saytext = strip_shortcodes($saytext);					 // avoid recursion and other problems
+	$saytext = strip_shortcodes($saytext);			// avoid recursion and other problems
 	
 	if (empty($saytext)) return $content;			// What! Nothing to say? 
 	 
@@ -80,7 +80,7 @@ function lup_ListenUp ( $atts, $content = null, $tag = '' ) {
 			if (empty($lang)) $lang = 'en';			// force lang choice for Chrome & Firefox 
 		} 
 		elseif (strtolower($voice) == 'female') { 
-			$parms[] = "'voice':'Samantha'";		// I think she's Irish 
+			$parms[] = "'voice':'Karen'";	    	// I think she's Irish 
 			if (empty($lang)) $lang = 'en';			// force voice 
 		}  
 		else $parms[] = "'voice':'$voice'";
@@ -134,29 +134,20 @@ function lup_ListenUp ( $atts, $content = null, $tag = '' ) {
 	return "<span $attributes>$content</span>"; 
 } 
 
-/* plugin supporting functions */ 
-
+/* Add a stylesheet with the default CSS */
 function lup_ListenUp_styles () { 						// default stylesheet  
 	echo '<link rel=stylesheet href="' . plugins_url('ListenUp') . '/ListenUp.css'. '"/>'; 
 } 
 
-function listenup_plugin_row_meta( $links, $file ) { 	// filter for admin plugins page
-	if ( strpos( $file, 'ListenUp.php' ) !== false ) {		 
-	$links[] = '<a href="' . plugins_url('ListenUp') . '/README.html" target="_blank">View details</a>'; 
-	} 
-	return $links; 
-}
-
-if (is_admin()) {      						// add readme link to plugins page
-    add_filter( 'plugin_row_meta', 'listenup_plugin_row_meta', 10, 2 ); 
+if (is_admin()) {      						// add readme link to plugins page entry
+	include plugin_dir_path( __FILE__ ) . 'ListenUp-admin.php';
 }
 else {
 	add_shortcode('ListenUp', 'lup_ListenUp'); 			// add the 4 shortcode functions 
 	add_shortcode('ListenUpExcerpt', 'lup_ListenUp'); 
 	add_shortcode('ListenUpCustom', 'lup_ListenUp'); 
 	add_shortcode('ListenUpImage', 'lup_ListenUp'); 
-	
-	add_action('wp_head', 'lup_ListenUp_styles'); 		// add stylesheet and JavaScript
+	add_action('wp_head', 'lup_ListenUp_styles');
 	wp_enqueue_script( 'sayText', plugins_url('ListenUp') . '/sayText.js', array(), null, true ); 
 }
 ?>
